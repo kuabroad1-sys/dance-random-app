@@ -6,7 +6,7 @@ import re
 # --- 1. 페이지 설정 ---
 st.set_page_config(page_title="Yuju's Random Dance Finder", layout="centered")
 
-# --- 2. 디자인 고도화 (귀여운 폰트 및 스타일 추가) ---
+# --- 2. 디자인 고도화 ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Orbitron:wght@900&family=Black+Han+Sans&display=swap');
@@ -78,4 +78,23 @@ def fetch_target_video():
     try:
         headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(url, headers=headers)
-        v_ids =
+        # 이 부분이 에러가 났던 지점입니다. 한 줄로 정확히 이어져야 합니다.
+        v_ids = re.findall(r"watch\?v=(\S{11})", response.text)
+        if v_ids:
+            return random.choice(list(set(v_ids)))
+        else:
+            return "GQuE_V3_0O4"
+    except Exception:
+        return "GQuE_V3_0O4"
+
+# --- 5. 가동 버튼 ---
+if st.button("🕺 랜플댄스 찾기! 💃"):
+    st.session_state.v_id = fetch_target_video()
+    st.balloons()
+
+# --- 6. 결과 출력 ---
+if 'v_id' in st.session_state:
+    st.markdown('<div class="video-frame">', unsafe_allow_html=True)
+    st.video(f"https://www.youtube.com/watch?v={st.session_state.v_id}")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align:center; color:#ffb7ff; font-family:\'Gaegu\'; font-size:1.5rem;">💖 유주가 찾아낸 오늘의 댄스 타겟! 💖</p>', unsafe_allow_html=True)
