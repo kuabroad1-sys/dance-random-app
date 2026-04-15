@@ -9,7 +9,6 @@ st.set_page_config(page_title="Yuju's Random Dance Finder", layout="centered")
 # --- 2. 디자인 고도화 (귀여운 폰트 및 스타일 추가) ---
 st.markdown("""
     <style>
-    /* 구글 폰트에서 귀엽고 둥근 폰트와 힙한 폰트 불러오기 */
     @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Orbitron:wght@900&family=Black+Han+Sans&display=swap');
 
     .stApp {
@@ -17,7 +16,6 @@ st.markdown("""
         color: #00f2ea;
     }
     
-    /* 메인 타이틀 */
     .neon-title {
         text-align: center;
         font-size: 3.5rem;
@@ -28,17 +26,15 @@ st.markdown("""
         line-height: 1.1;
     }
 
-    /* Yuju's Random Dance Finder (귀여운 폰트 적용) */
     .yuju-brand {
         text-align: center;
         font-size: 1.5rem;
         color: #ffb7ff;
-        font-family: 'Gaegu', cursive; /* 귀여운 손글씨 느낌 */
+        font-family: 'Gaegu', cursive;
         margin-bottom: 30px;
         text-shadow: 0 0 5px #ff00de;
     }
 
-    /* 버튼 스타일 */
     div.stButton > button {
         background: transparent;
         color: #00f2ea;
@@ -47,7 +43,7 @@ st.markdown("""
         font-family: 'Black Han Sans', sans-serif;
         height: 85px;
         width: 100%;
-        border-radius: 20px; /* 약간 둥글게 변경 */
+        border-radius: 20px;
         transition: 0.3s;
         box-shadow: 0 0 15px #00f2ea;
     }
@@ -61,4 +57,25 @@ st.markdown("""
     .video-frame {
         border: 8px solid #ff00de;
         padding: 5px;
-        border-radius: 1
+        border-radius: 15px;
+        box-shadow: 0 0 30px #ff00de;
+        background: #000;
+        margin-top: 20px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- 3. UI 구성 ---
+st.markdown('<h1 class="neon-title">RANDOM DANCE<br>FINDER</h1>', unsafe_allow_html=True)
+st.markdown('<p class="yuju-brand">✨ Yuju\'s Random Dance Finder ✨</p>', unsafe_allow_html=True)
+
+# --- 4. 영상 추출 로직 ---
+def fetch_target_video():
+    queries = ["dance challenge shorts", "kpop shorts dance", "랜플댄 챌린지", "tiktok dance"]
+    q = random.choice(queries).replace(" ", "+")
+    url = f"https://www.youtube.com/results?search_query={q}"
+    
+    try:
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.get(url, headers=headers)
+        v_ids =
